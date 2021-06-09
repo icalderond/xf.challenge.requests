@@ -20,6 +20,10 @@ namespace ServiceRequest.ViewModels
             {
                 IsBusy = true;
                 var listRequests = await SrListService.GetSrList();
+
+                Random r = new Random();
+                listRequests.ForEach(x => x.StatusUI = r.Next(1, 3));
+
                 RequesModelList = new ObservableCollection<RequestModel>(listRequests);
             }
             catch (Exception ex)
@@ -57,5 +61,16 @@ namespace ServiceRequest.ViewModels
             set => Set(ref _IsBusy, value);
         }
         #endregion [ Properties ]
+
+        #region [ Commands ]
+        private ActionCommand _OrderByCommand;
+        public ActionCommand OrderByCommand
+        {
+            get => _OrderByCommand= _OrderByCommand??new ActionCommand(()=> { 
+            
+            });
+        }
+
+        #endregion [ Commands ]
     }
 }

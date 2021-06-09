@@ -1,16 +1,85 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ServiceRequest.Views.DashboardPage">
-    <ContentPage.Content>
+             x:Class="ServiceRequest.Views.DashboardPage"
+             xmlns:viewmodel="clr-namespace:ServiceRequest.ViewModels"
+             xmlns:renderers="clr-namespace:ServiceRequest.Renderers">
+    <ContentPage.BindingContext>
+        <viewmodel:DashboardViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="labelTitle">
+                <Setter Property="FontAttributes" Value="None"/>
+                <Setter Property="TextColor" Value="Gray"/>
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style TargetType="Label" x:Key="labelContent">
+                <Setter Property="FontAttributes" Value="None"/>
+                <Setter Property="TextColor" Value="Gray"/>
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <DataTemplate x:Key="requestTemplate">
+                <ViewCell>
+                    <Grid Margin="0,10">
+                        <CheckBox Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Image Grid.Column="1" Source="done.png" HeightRequest="12" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
+                                           BackgroundColor="Transparent"/>
+                        <Frame Grid.Column="2" WidthRequest="8" HeightRequest="8" CornerRadius="4" HorizontalOptions="Center" VerticalOptions="Center" Padding="0" IsClippedToBounds="False" HasShadow="False">
+                            <Frame.Triggers>
+                                <DataTrigger TargetType="Frame" Binding="{Binding StatusUI}" Value="1">
+                                    <Setter Property="BackgroundColor" Value="Green"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding StatusUI}" Value="2">
+                                    <Setter Property="BackgroundColor" Value="Red"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Frame" Binding="{Binding StatusUI}" Value="3">
+                                    <Setter Property="BackgroundColor" Value="Orange"/>
+                                </DataTrigger>
+                            </Frame.Triggers>
+                        </Frame>
+                        <Label Grid.Column="3" Text="{Binding INCIDENTID}"  Style="{StaticResource labelContent}"/>
+                        <Label Grid.Column="4" Text="{Binding SUMMARY}"   Style="{StaticResource labelContent}"/>
+                        <Label Grid.Column="5" Text="{Binding INCIDENTSEVERITYID}"  Style="{StaticResource labelContent}"/>
+                        <Label Grid.Column="6" Text="{Binding ORGANIZATIONID}"  Style="{StaticResource labelContent}"/>
+                        <Label Grid.Column="7" Text="{Binding INVENTORYORGID}"  Style="{StaticResource labelContent}"/>
 
+                        <Frame Grid.Column="8" BackgroundColor="#eacff7" Padding="8,3" CornerRadius="14"
+                               HeightRequest="20" 
+                               HorizontalOptions="Center" 
+                               IsClippedToBounds="False"
+                               VerticalOptions="Center" HasShadow="False">
+                            <Label FontSize="10" FontAttributes="Bold" VerticalTextAlignment="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding StatusUI}" Value="1">
+                                        <Setter Property="Text" Value="Accepted"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding StatusUI}" Value="2">
+                                        <Setter Property="Text" Value="Open"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding StatusUI}" Value="3">
+                                        <Setter Property="Text" Value="Approved"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
         <Grid ColumnSpacing="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackLayout Grid.Column="0" WidthRequest="100" VerticalOptions="FillAndExpand"
-                     BackgroundColor="#53629b" Spacing="0"/>
+                     BackgroundColor="BlueViolet" Spacing="0"/>
             <Grid Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
               BackgroundColor="#f3f3ff" Padding="15">
                 <Grid.RowDefinitions>
@@ -31,17 +100,91 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
-                            <Label Text="Service Request" FontAttributes="Bold" TextColor="Black" FontSize="Medium"/>
-                            <Frame HeightRequest="20" Padding="10,2" CornerRadius="11" BackgroundColor="#bfe1df">
+                        <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Start" Spacing="15">
+                            <Label Text="Service Requests" FontAttributes="Bold" TextColor="Black" FontSize="Medium"/>
+                            <Frame HeightRequest="20" Padding="10,2" CornerRadius="11" BackgroundColor="#bfe1df" VerticalOptions="Center">
                                 <Label Text="269" FontSize="Micro" TextColor="Green" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                             </Frame>
                         </StackLayout>
                         <Grid Grid.Row="1">
-                            <SearchBar VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Search"/>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame Grid.Column="0" HeightRequest="40" CornerRadius="20" Padding="1" BorderColor="LightGray" WidthRequest="400" HorizontalOptions="Start">
+                                <StackLayout Orientation="Horizontal" BackgroundColor="Transparent">
+                                    <Image Source="lupa.png" HeightRequest="18" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
+                                           BackgroundColor="Transparent"/>
+                                    <renderers:CustomSearchBar FontSize="Micro" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Search"
+                                                               PlaceholderColor="LightGray" TextColor="Black" BackgroundColor="Transparent"/>
+                                </StackLayout>
+                            </Frame>
+                            <Grid Grid.Column="1">
+                                <StackLayout HorizontalOptions="End" Orientation="Horizontal" Spacing="20">
+                                    <Frame BorderColor="Black" HorizontalOptions="Center" HasShadow="False" IsClippedToBounds="False" HeightRequest="30" VerticalOptions="Center"
+                                           CornerRadius="20" Padding="15,1">
+                                        <StackLayout VerticalOptions="Center" Orientation="Horizontal">
+                                            <Image Source="filter.png" HeightRequest="18" WidthRequest="12" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
+                                           BackgroundColor="Transparent"/>
+                                            <Label Text="Filter" VerticalTextAlignment="Center" FontSize="Micro" />
+                                        </StackLayout>
+                                    </Frame>
+                                    <Frame BorderColor="Green" HorizontalOptions="Center" HasShadow="False" IsClippedToBounds="False" HeightRequest="30" VerticalOptions="Center"
+                                           CornerRadius="20" Padding="15,1">
+                                        <StackLayout VerticalOptions="Center" Orientation="Horizontal">
+                                            <Image Source="download.png" HeightRequest="12" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
+                                           BackgroundColor="Transparent"/>
+                                            <Label Text="Download" VerticalTextAlignment="Center" FontSize="Micro" TextColor="Green"/>
+                                        </StackLayout>
+                                    </Frame>
+                                    <Frame BorderColor="Green" HorizontalOptions="Center" HasShadow="False" IsClippedToBounds="False" HeightRequest="30" VerticalOptions="Center"
+                                           CornerRadius="20" Padding="15,1">
+                                        <StackLayout VerticalOptions="Center" Orientation="Horizontal">
+                                            <Image Source="plus.png" HeightRequest="12" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
+                                           BackgroundColor="Transparent"/>
+                                            <Label Text="Add" VerticalTextAlignment="Center" FontSize="Micro" TextColor="Green"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </Grid>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <ListView BackgroundColor="Red" ItemsSource="{Binding RequesModelList}"/>
+                            <ListView ItemsSource="{Binding RequesModelList}" ItemTemplate="{StaticResource requestTemplate}">
+                                <ListView.Header>
+                                    <Grid>
+                                        <Label Grid.Column="0" Text="" Style="{StaticResource labelTitle}" />
+                                        <Label Grid.Column="1" Text="" Style="{StaticResource labelTitle}"/>
+                                        <Label Grid.Column="2" Text="" Style="{StaticResource labelTitle}"/>
+                                        <StackLayout Grid.Column="3" Orientation="Horizontal">
+                                            <Label  Text="INCIDENT ID" Style="{StaticResource labelTitle}"/>
+                                            <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="4" Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding OrderByCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <Label  Text="SUMMARY" Style="{StaticResource labelTitle}"/>
+                                            <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="5" Orientation="Horizontal">
+                                            <Label  Text="INCIDENT SEVERITY ID" Style="{StaticResource labelTitle}"/>
+                                            <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="6" Orientation="Horizontal">
+                                            <Label  Text="ORGANIZATION ID" Style="{StaticResource labelTitle}"/>
+                                            <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="7" Orientation="Horizontal">
+                                            <Label  Text="INVENTORY ORG ID" Style="{StaticResource labelTitle}"/>
+                                            <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="8" Orientation="Horizontal">
+                                            <Label  Text="STATUS" Style="{StaticResource labelTitle}"/>
+                                            <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </ListView.Header>
+                            </ListView>
                         </Grid>
                     </Grid>
                 </Frame>

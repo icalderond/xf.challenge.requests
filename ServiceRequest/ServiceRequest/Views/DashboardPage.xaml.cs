@@ -10,7 +10,7 @@ namespace ServiceRequest.Views
         public DashboardPage()
         {
             InitializeComponent();
-            this.BindingContext = new DashboardViewModel();
+            //this.BindingContext = new DashboardViewModel();
         }
     }
 }
