@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ServiceRequest.Views.DashboardPage">
+    <ContentPage.Content>
+
+        <Grid ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Column="0" WidthRequest="100" VerticalOptions="FillAndExpand"
+                     BackgroundColor="#53629b" Spacing="0"/>
+            <Grid Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+              BackgroundColor="#f3f3ff" Padding="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <StackLayout Spacing="0">
+                        <Label Text="Service Request" FontAttributes="Bold" FontSize="Large" TextColor="Black"/>
+                        <Label Text="Service Request" FontAttributes="Bold" FontSize="Micro" TextColor="#8bb9ca"/>
+                    </StackLayout>
+                </Grid>
+
+                <Frame Grid.Row="1" CornerRadius="10" Padding="10" BackgroundColor="White" Margin="0,30,0,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Start" Spacing="5">
+                            <Label Text="Service Request" FontAttributes="Bold" TextColor="Black" FontSize="Medium"/>
+                            <Frame HeightRequest="20" Padding="10,2" CornerRadius="11" BackgroundColor="#bfe1df">
+                                <Label Text="269" FontSize="Micro" TextColor="Green" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                            </Frame>
+                        </StackLayout>
+                        <Grid Grid.Row="1">
+                            <SearchBar VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Search"/>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <ListView BackgroundColor="Red"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
