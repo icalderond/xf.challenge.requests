@@ -41,11 +41,12 @@
                             <SearchBar VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Search"/>
                         </Grid>
                         <Grid Grid.Row="2">
-                            <ListView BackgroundColor="Red"/>
+                            <ListView BackgroundColor="Red" ItemsSource="{Binding RequesModelList}"/>
                         </Grid>
                     </Grid>
                 </Frame>
             </Grid>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Center"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
