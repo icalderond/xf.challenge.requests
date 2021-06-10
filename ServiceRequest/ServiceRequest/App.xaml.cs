@@ -8,8 +8,10 @@ namespace ServiceRequest
         public App()
         {
             InitializeComponent();
-
-            MainPage = new DashboardPage();
+            if (Device.RuntimePlatform == Device.UWP)
+                MainPage = new DashboardPage();
+            else
+                MainPage = new RequestsPage();
         }
 
         protected override void OnStart()

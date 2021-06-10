@@ -7,5 +7,10 @@
         public const string Forbidden = "Usted no tiene permisos requeridos para este recurso";
         public const string InternalServerError = "Hubo un error interno en el servidor";
         public const string Default = "Ocurrio un error al consultar, favor de revisar";
+
+        /*
+        Android
+        Paginacion
+         */
     }
 }

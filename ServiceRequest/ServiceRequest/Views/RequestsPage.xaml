@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ServiceRequest.Views.RequestsPage"
+             xmlns:viewmodels="clr-namespace:ServiceRequest.ViewModels"
+             xmlns:renderers="clr-namespace:ServiceRequest.Renderers"
+             BackgroundColor="#F5F5F5">
+    <ContentPage.BindingContext>
+        <viewmodels:RequestsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid Padding="15,10,15,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout Spacing="0">
+                <Label Text="Service Request" FontAttributes="Bold" FontSize="40"  TextColor="Black"/>
+                <Label Text="Service Request" FontAttributes="Bold" FontSize="Large" TextColor="#8bb9ca"/>
+            </StackLayout>
+            <Frame Grid.Row="1" Margin="0,10" HeightRequest="40" CornerRadius="20" Padding="1" BorderColor="LightGray" WidthRequest="400" 
+                   HorizontalOptions="CenterAndExpand" 
+                   HasShadow="False">
+                <StackLayout Orientation="Horizontal" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+                    <Image Source="lupa.png" HeightRequest="18" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
+                                           BackgroundColor="Transparent"/>
+                    <renderers:CustomSearchBar FontSize="Medium" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Search"
+                                               Text="{Binding QuerySearch}"
+                                                               PlaceholderColor="LightGray" TextColor="Black" BackgroundColor="Transparent"/>
+                </StackLayout>
+            </Frame>
+            <Frame Grid.Row="2" IsClippedToBounds="False" HasShadow="False" CornerRadius="15" BackgroundColor="White" Padding="10,10">
+                <ListView  ItemsSource="{Binding RequesModelList}" HasUnevenRows="True" SeparatorVisibility="None"
+                           CachingStrategy="RecycleElement" IsRefreshing="{Binding IsBusy}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame Padding="10" BackgroundColor="#F5F5F5" CornerRadius="10" Margin="0,10" HasShadow="False">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <StackLayout Orientation="Horizontal" Grid.Row="0">
+                                            <Frame Grid.Column="2"  WidthRequest="8" HeightRequest="8"
+                                               BorderColor="Transparent" CornerRadius="4" HorizontalOptions="Center"
+                                               VerticalOptions="Center" Padding="0" IsClippedToBounds="False" HasShadow="False">
+                                                <Frame.Triggers>
+                                                    <DataTrigger TargetType="Frame" Binding="{Binding StatusUI}" Value="1">
+                                                        <Setter Property="BackgroundColor" Value="Green"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Frame" Binding="{Binding StatusUI}" Value="2">
+                                                        <Setter Property="BackgroundColor" Value="Red"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Frame" Binding="{Binding StatusUI}" Value="3">
+                                                        <Setter Property="BackgroundColor" Value="Orange"/>
+                                                    </DataTrigger>
+                                                </Frame.Triggers>
+                                            </Frame>
+                                            <Label FontSize="Large" TextColor="DeepSkyBlue" FontAttributes="Bold">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding INCIDENTID}"/>
+                                                        <Span Text="-"/>
+                                                        <Span Text="{Binding SUMMARY}"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </StackLayout>
+                                        
+                                        <Grid Grid.Row="1" >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <Image Grid.Column="1"  Source="done.png" HeightRequest="12" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
+                                           BackgroundColor="Transparent"/>
+                                        </Grid>
+
+                                        <Grid  Grid.Row="2">
+                                            <Label Grid.Column="0" Text="{Binding CREATIONDATE, StringFormat='{}{0:MM/dd/yyyy}'}" VerticalOptions="End" />
+                                            <Frame Grid.Column="1" HorizontalOptions="End" BackgroundColor="#eacff7" Padding="8,3" CornerRadius="14"
+                                               HeightRequest="20" 
+                                               IsClippedToBounds="False"
+                                               VerticalOptions="Center" HasShadow="False">
+                                            <Label FontSize="Medium" FontAttributes="Bold" VerticalTextAlignment="Center">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding StatusUI}" Value="1">
+                                                        <Setter Property="Text" Value="Accepted"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding StatusUI}" Value="2">
+                                                        <Setter Property="Text" Value="Open"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding StatusUI}" Value="3">
+                                                        <Setter Property="Text" Value="Approved"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            </Frame>
+                                        </Grid>
+
+                                    </Grid> 
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

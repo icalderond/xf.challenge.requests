@@ -27,6 +27,9 @@ namespace ServiceRequest.ViewModels
                 IsBusy = true;
                 ListRequestsBase = await SrListService.GetSrList();
 
+                //ToDo: Remove this line
+                ListRequestsBase = ListRequestsBase.Take(50).ToList();
+
                 Random r = new Random();
                 ListRequestsBase.ForEach(x => x.StatusUI = r.Next(1, 3));
 
@@ -60,6 +63,17 @@ namespace ServiceRequest.ViewModels
             get { return _SrListService = _SrListService ?? new SrListService(); }
         }
 
+        private string _QuerySearch;
+        public string QuerySearch
+        {
+            get => _QuerySearch;
+            set
+            {
+                Set(ref _QuerySearch, value);
+                FilterList(_QuerySearch);
+            }
+        }
+
         private bool _IsBusy;
         public bool IsBusy
         {
@@ -67,6 +81,19 @@ namespace ServiceRequest.ViewModels
             set => Set(ref _IsBusy, value);
         }
         #endregion [ Properties ]
+
+        #region [ Methods ]
+        private void FilterList(string querySearch)
+        {
+            if (querySearch.Length >= 3)
+            {
+                var filterList = ListRequestsBase.Where(x => x.SUMMARY.ToLower().Contains(querySearch));
+                RequesModelList = new ObservableCollection<RequestModel>(filterList);
+            }
+            else if (RequesModelList.Count != ListRequestsBase.Count)
+                RequesModelList = new ObservableCollection<RequestModel>(ListRequestsBase);
+        }
+        #endregion [ Methods ]
 
         #region [ Commands ]
         private ActionCommand<string> _OrderByCommand;
@@ -91,7 +118,5 @@ namespace ServiceRequest.ViewModels
         }
 
         #endregion [ Commands ]
-
-
     }
 }
