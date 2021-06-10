@@ -1,12 +1,18 @@
 ﻿using ServiceRequest.Models;
 using ServiceRequest.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace ServiceRequest.ViewModels
 {
     public class DashboardViewModel : BindableBase
     {
+        #region [ Variables ]
+        public List<RequestModel> ListRequestsBase { get; set; }
+        #endregion [ Variables ]
+
         #region [ Constructor ]
         public DashboardViewModel()
         {
@@ -19,12 +25,12 @@ namespace ServiceRequest.ViewModels
             try
             {
                 IsBusy = true;
-                var listRequests = await SrListService.GetSrList();
+                ListRequestsBase = await SrListService.GetSrList();
 
                 Random r = new Random();
-                listRequests.ForEach(x => x.StatusUI = r.Next(1, 3));
+                ListRequestsBase.ForEach(x => x.StatusUI = r.Next(1, 3));
 
-                RequesModelList = new ObservableCollection<RequestModel>(listRequests);
+                RequesModelList = new ObservableCollection<RequestModel>(ListRequestsBase);
             }
             catch (Exception ex)
             {
@@ -63,14 +69,29 @@ namespace ServiceRequest.ViewModels
         #endregion [ Properties ]
 
         #region [ Commands ]
-        private ActionCommand _OrderByCommand;
-        public ActionCommand OrderByCommand
+        private ActionCommand<string> _OrderByCommand;
+        public ActionCommand<string> OrderByCommand
         {
-            get => _OrderByCommand= _OrderByCommand??new ActionCommand(()=> { 
-            
+            get => _OrderByCommand = _OrderByCommand ?? new ActionCommand<string>((param) =>
+            {
+                var orderedByAsc = ListRequestsBase.OrderBy(x => x.GetType().GetProperty(param).GetValue(x, null)).ToList();
+                var listToCompare = RequesModelList.ToList();
+
+                if (listToCompare.SequenceEqual(orderedByAsc.ToList()))
+                {
+                    var orderedList = ListRequestsBase.OrderByDescending(x => x.GetType().GetProperty(param).GetValue(x, null));
+                    RequesModelList = new ObservableCollection<RequestModel>(orderedList);
+                }
+                else
+                {
+                    var orderedList = ListRequestsBase.OrderBy(x => x.GetType().GetProperty(param).GetValue(x, null));
+                    RequesModelList = new ObservableCollection<RequestModel>(orderedList);
+                }
             });
         }
 
         #endregion [ Commands ]
+
+
     }
 }

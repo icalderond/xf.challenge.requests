@@ -155,32 +155,48 @@
                                         <Label Grid.Column="0" Text="" Style="{StaticResource labelTitle}" />
                                         <Label Grid.Column="1" Text="" Style="{StaticResource labelTitle}"/>
                                         <Label Grid.Column="2" Text="" Style="{StaticResource labelTitle}"/>
+                                        <!--INCIDENTID-->
                                         <StackLayout Grid.Column="3" Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding OrderByCommand}" CommandParameter="INCIDENTID"/>
+                                            </StackLayout.GestureRecognizers>
                                             <Label  Text="INCIDENT ID" Style="{StaticResource labelTitle}"/>
                                             <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </StackLayout>
+                                        <!--SUMMARY-->
                                         <StackLayout Grid.Column="4" Orientation="Horizontal">
                                             <StackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding OrderByCommand}"/>
+                                                <TapGestureRecognizer Command="{Binding OrderByCommand}" CommandParameter="SUMMARY"/>
                                             </StackLayout.GestureRecognizers>
                                             <Label  Text="SUMMARY" Style="{StaticResource labelTitle}"/>
                                             <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </StackLayout>
+                                        <!--INCIDENT SEVERITY ID-->
                                         <StackLayout Grid.Column="5" Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding OrderByCommand}" CommandParameter="INCIDENTSEVERITYID"/>
+                                            </StackLayout.GestureRecognizers>
                                             <Label  Text="INCIDENT SEVERITY ID" Style="{StaticResource labelTitle}"/>
                                             <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </StackLayout>
+                                        <!--ORGANIZATION ID-->
                                         <StackLayout Grid.Column="6" Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding OrderByCommand}" CommandParameter="ORGANIZATIONID"/>
+                                            </StackLayout.GestureRecognizers>
                                             <Label  Text="ORGANIZATION ID" Style="{StaticResource labelTitle}"/>
                                             <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </StackLayout>
+                                        <!--INVENTORY ORG ID-->
                                         <StackLayout Grid.Column="7" Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding OrderByCommand}" CommandParameter="INVENTORYORGID"/>
+                                            </StackLayout.GestureRecognizers>
                                             <Label  Text="INVENTORY ORG ID" Style="{StaticResource labelTitle}"/>
                                             <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </StackLayout>
                                         <StackLayout Grid.Column="8" Orientation="Horizontal">
                                             <Label  Text="STATUS" Style="{StaticResource labelTitle}"/>
-                                            <Image Source="sort.png" WidthRequest="40" HeightRequest="18" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </StackLayout>
                                     </Grid>
                                 </ListView.Header>
