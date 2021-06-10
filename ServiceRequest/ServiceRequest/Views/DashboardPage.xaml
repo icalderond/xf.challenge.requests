@@ -26,7 +26,7 @@
             <DataTemplate x:Key="requestTemplate">
                 <ViewCell>
                     <Grid Margin="0,10">
-                        <CheckBox Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <CheckBox Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Color="LightGray"/>
                         <Image Grid.Column="1" Source="done.png" HeightRequest="12" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
                                            BackgroundColor="Transparent"/>
                         <Frame Grid.Column="2" WidthRequest="8" HeightRequest="8" CornerRadius="4" HorizontalOptions="Center" VerticalOptions="Center" Padding="0" IsClippedToBounds="False" HasShadow="False">
@@ -93,7 +93,7 @@
                     </StackLayout>
                 </Grid>
 
-                <Frame Grid.Row="1" CornerRadius="10" Padding="10" BackgroundColor="White" Margin="0,30,0,0">
+                <Frame Grid.Row="1" CornerRadius="10" Padding="10" BackgroundColor="White" Margin="0,30,0,0" HasShadow="False">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -102,7 +102,7 @@
                         </Grid.RowDefinitions>
                         <StackLayout Grid.Row="0" Orientation="Horizontal" HorizontalOptions="Start" Spacing="15">
                             <Label Text="Service Requests" FontAttributes="Bold" TextColor="Black" FontSize="Medium"/>
-                            <Frame HeightRequest="20" Padding="10,2" CornerRadius="11" BackgroundColor="#bfe1df" VerticalOptions="Center">
+                            <Frame HeightRequest="20" Padding="10,2" CornerRadius="11" BackgroundColor="#bfe1df" VerticalOptions="Center" HasShadow="False">
                                 <Label Text="269" FontSize="Micro" TextColor="Green" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
                             </Frame>
                         </StackLayout>
@@ -111,12 +111,12 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Frame Grid.Column="0" HeightRequest="40" CornerRadius="20" Padding="1" BorderColor="LightGray" WidthRequest="400" HorizontalOptions="Start">
+                            <Frame Grid.Column="0" HeightRequest="40" CornerRadius="20" Padding="1" BorderColor="LightGray" WidthRequest="400" HorizontalOptions="Start" HasShadow="False">
                                 <StackLayout Orientation="Horizontal" BackgroundColor="Transparent">
                                     <Image Source="lupa.png" HeightRequest="18" WidthRequest="18" Margin="10,0,0,0" VerticalOptions="Center" HorizontalOptions="Start"
                                            BackgroundColor="Transparent"/>
                                     <renderers:CustomSearchBar FontSize="Micro" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Placeholder="Search"
-                                                               PlaceholderColor="LightGray" TextColor="Black" BackgroundColor="Transparent"/>
+                                                               PlaceholderColor="LightGray" TextColor="Black" BackgroundColor="Transparent" Text="{Binding QuerySearch}"/>
                                 </StackLayout>
                             </Frame>
                             <Grid Grid.Column="1">
